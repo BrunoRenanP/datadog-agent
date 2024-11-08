@@ -1,0 +1,18 @@
+services:
+  ecommerce-app:
+    image: ecommerce-image
+    environment:
+      - DD_AGENT_HOST=https://api.datadoghq.com
+    ports:
+      - "8080:8080"
+    depends_on:
+      - datadog-agent
+
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:latest
+    environment:
+      - DD_API_KEY=apikey
+      - DD_LOGS_ENABLED=true
+      - DD_APM_ENABLED=true
+    ports:
+      - "8125:8125/udp"  # Expor a porta StatsD
